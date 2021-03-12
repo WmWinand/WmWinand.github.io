@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Task schemaVersion="5.4" runNLS="never">
+	
+	    <Registration>
+        <Name>Convert Character to Numeric</Name>
+        <Description>Convert Character to Numeric</Description>
+        <GUID>9D3F4022-79A0-4D47-A7B1-A83579EB6504</GUID>
+        <Procedures>DATASETS</Procedures>
+        <Version>3.81</Version>
+        <Links>
+            <Link href="http://documentation.sas.com/?softwareId=STUDIOMID&amp;softwareVersion=3.8&amp;softwareContextId=tasks&amp;requestor=inapp">SAS Studio Task Reference Guide</Link>
+            <Link href=""/>
+            <Link href=""/>
+            <Link href="http://documentation.sas.com/?softwareId=MVADOC&amp;softwareVersion=3.8_9.4&amp;softwareContextId=proc_datasets&amp;requestor=inapp">The DATASETS Procedure</Link>
+            <Link href=""/>
+            <Link href=""/>
+            <Link href="http://support.sas.com/training/studio">SAS Tutorials</Link>
+        </Links>
+        <Category>Data</Category>
+    </Registration>
+	
+	
+	<Metadata>
+		
+		<DataSources>
+		   <DataSource name="inlibname">
+		   <Roles>
+ 			  <Role name="invarname" type="C" minVars="1" maxVars="1">
+                 Character variable to convert</Role>
+           </Roles>
+           </DataSource>
+		</DataSources>
+
+		<Options>
+		   <Option name="dataTab" inputType="string">DATA</Option>
+           <Option name="dataGroup" inputType="string">DATA</Option>
+           <Option name="rolesGroup" inputType="string">ROLES</Option>
+           <Option name="optionsGroup" inputType="string">OPTIONS</Option>
+           
+           <Option name="samename" inputType="checkbox">Same name?</Option>
+           <Option name="informatType" inputType="combobox">Category
+              of informat:</Option>
+           <Option name="numericChoice" inputType="string">
+              Numeric</Option>
+           <Option name="dateChoice" inputType="string">
+              Date</Option>
+              
+           <Option name="numericInformat" inputType="combobox">
+              Numeric informat:</Option>
+           <Option name="numeric1" inputType="string" returnValue="BEST">
+              BEST</Option>
+           <Option name="numeric2" inputType="string" returnValue="COMMA">
+              COMMA</Option>
+           <Option name="dateInformat" inputType="combobox">Date informat:
+              </Option>
+           <Option name="date1" inputType="string" returnValue="DDMMYY">
+              DDMMYY</Option>
+           <Option name="date2" inputType="string" returnValue="MMDDYY">
+              MMDDYY</Option>
+              
+           <Option name="informatWidth" inputType="numbertext" minValue="1"
+              defaultValue="10">Informat width:</Option>
+           <Option name="outputDSName" inputType="outputdata" defaultValue="Test"
+              required="true">Name of output data set:</Option>
+		</Options>
+		
+	</Metadata>
+	
+	<UI>
+	   <Container option="dataTab">
+          <Group option="dataGroup" open="true">
+             <DataItem data="inlibname" />
+          </Group>
+          
+          <Group option="rolesGroup" open="true">
+             <RoleItem role="invarname" />
+          </Group>
+          
+          <Group option="optionsGroup" open="true">
+             <OptionItem option="samename" />
+             <OptionChoice option="informatType">
+                <OptionItem option="numericChoice" />
+                <OptionItem option="dateChoice" />
+             </OptionChoice>
+             
+             <OptionChoice option="numericInformat">
+                <OptionItem option="numeric1" />
+                <OptionItem option="numeric2" />
+             </OptionChoice>
+             <OptionChoice option="dateInformat">
+                <OptionItem option="date1" />
+                <OptionItem option="date2" />
+             </OptionChoice>
+             
+             <OptionItem option="informatWidth" />
+             <OptionItem option="outputDSName" />
+          </Group>
+       </Container>
+	</UI>
+	
+	<Dependencies>
+       <Dependency condition="$informatType == 'numericChoice'">
+          <Target action="show" conditionResult="true" option="numericInformat"/>
+          <Target action="hide" conditionResult="true" option="dateInformat"/>
+       </Dependency>
+       <Dependency condition="$informatType == 'dateChoice'">
+          <Target action="hide" conditionResult="true" option="numericInformat"/>
+          <Target action="show" conditionResult="true" option="dateInformat"/>
+       </Dependency>
+    </Dependencies>
+
+	
+  	<CodeTemplate>
+		<![CDATA[
+
+        #foreach($item in $invarname) #set($charvar = $item)#end
+ 
+        #if($informatType == "numericChoice")
+           #set($informat = "${numericInformat}${informatWidth}.")
+        #else
+           #set($informat = "${dateInformat}${informatWidth}.")
+        #end
+
+        data $outputDSName;
+        #if ($samename=='1')
+           #set($newCol = "${charvar}_old")
+           set $inlibname(rename=$charvar=$newCol);
+           $charvar = input($newCol,$informat);
+           drop $newCol;
+        #else
+           #set($newCol = "${charvar}_new")
+           set $inlibname;
+           $newCol = input($charvar,$informat);
+        #end
+        
+        run;
+		]]>
+	</CodeTemplate>
+
+<TemplateValues version="3.8">
+<![CDATA[
+{"informatWidth":"10","date2":"MMDDYY","sasOS":"X64_DSRV16 WIN","date1":"DDMMYY","dataTab":"DATA","dataGroup":"DATA","dateChoice":"Date","inlibname":{"librarytable":"WORK.CHARACTER"},"rolesGroup":"ROLES","sasVersion":"9.47","samename":"","informatType":"numericChoice","optionsGroup":"OPTIONS","numericChoice":"Numeric","numeric2":"COMMA","numeric1":"BEST","outputDSName":"Character_Out","numericInformat":"BEST","dateInformat":"DDMMYY","invarname":"json:[{\"value\":\"Age\",\"type\":\"Char\",\"length\":8,\"format\":\"\",\"informat\":\"\",\"className\":\"RoleObject\"}]"}
+]]>
+</TemplateValues>
+</Task>
