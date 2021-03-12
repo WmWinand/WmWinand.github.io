@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <Repository label="SAS Studio Custom Task Repository" version="1.0">
+         <Tasks>
+             <Category label="Custom Tasks">
+                 <Location uri="./CustomTasks/tasks.xml" />
+             </Category>
+         </Tasks>
+    </Repository>
