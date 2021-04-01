@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <Snippets>
+        <Snippet>
+            <Name label="Prepare and Explore Data Custom"/>
+                <Template uri="./PrepareExploreData.sas"/>
+         </Snippet>
+    </Snippets>
