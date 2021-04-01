@@ -3,12 +3,5 @@
          <Tasks>
              <Category label="Custom Tasks">
                  <Location uri="./CustomTasks/tasks.xml" />
-             </Category>
-
-         <Snippets>
-             <Category label="Custom Snippets">
-                 <Location uri="./CustomSnippets/snippets.xml" />
-             </Category>
-         </Snippets>
-    
+             </Category>   
     </Repository>
