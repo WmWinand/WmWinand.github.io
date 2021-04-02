@@ -3,5 +3,6 @@
          <Tasks>
              <Category label="Custom Tasks">
                  <Location uri="./CustomTasks/tasks.xml" />
-             </Category>   
+             </Category> 
+         </Tasks>
     </Repository>
